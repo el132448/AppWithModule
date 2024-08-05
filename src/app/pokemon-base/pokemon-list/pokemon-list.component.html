@@ -1,0 +1,68 @@
+<app-pokemon-detail></app-pokemon-detail>
+
+
+<h1 [innerHTML]="title"></h1>
+<img [src]="imgSrc">
+
+<!-- 4. two-way binding -->
+<div class="container">
+    <p>4. two-way binding</p>
+    <input [(ngModel)]="favouriteAnimal">
+    <p>{{favouriteAnimal}}</p>
+</div>
+
+
+<!-- 5. Template Reference Variable -->
+<div class="container">
+    <p>5. Template Reference Variable</p>
+    <input type="text" #input_test>
+    <button (click)="handleClick(input_test.value)">console log the input</button>
+</div>
+
+<!-- 7. ngFor & 8. ngClass & 9. ngStyle-->
+<div class="container">
+    <p>7. ngFor & 8. ngClass & 9. ngStyle</p>
+    <table>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Pkm id[class.]</th>
+            <th>Pkm id[ngClass]</th>
+            <th>Name[style.]</th>
+            <th>Name[ngStyle]</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pokemon of pokemons; let i = index">
+                <!-- add class "cool-bool" if "pokemon.isCool" is true -->
+                <td> {{i+1}} </td>
+                <td [class.cool-bool]="pokemon.isCool">{{ pokemon.id }}</td>
+                <td [ngClass]="{'cool-bool': pokemon.isCool}">{{ pokemon.id }}</td>
+                <td [style.backgroundColor]="(pokemon.isStylish ? 'pink' : '')">{{ pokemon.name }}</td>
+                <td [ngStyle]="{'backgroundColor': (pokemon.isStylish ? 'pink' : '')}"> {{ pokemon.name }}</td>
+                <td>{{ pokemon.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- 6. ngIf -->
+<div class="container">
+    <p>6. ngIf</p>
+
+    <input type="text" [value]="pokemonName" (input)="handleChange($event)">
+    <p>{{ pokemonName }}</p>
+
+    <ng-container *ngIf="pokemonName.length; then pokemonList; else noPokemon">
+    </ng-container>
+
+    <ng-template #pokemonList>
+        <h1>All pokemon available</h1>
+    </ng-template>
+
+    <ng-template #noPokemon>
+        <h1>No pokemon available</h1>
+    </ng-template>
+</div> 
